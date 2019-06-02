@@ -7,8 +7,9 @@
   "jsRules": {},
   "rules": {
     "align": [false],
-    "max-line-length": [true, 150],
     "forin": [false],
+    "max-line-length": [true, 150],
+    "object-literal-sort-keys": [false],
     "space-before-function-paren": [false]
   },
   "rulesDirectory": []

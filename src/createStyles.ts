@@ -1,18 +1,41 @@
 
-import { style } from 'typestyle';
+import { getStyles } from 'typestyle';
 import { NestedCSSProperties } from 'typestyle/lib/types';
+
+import replaceNests from './replaceNests';
 
 export default function createStyles<
    T extends { [classkey: string]: NestedCSSProperties },
    K extends keyof T,
    O extends { [classKey in K]: string },
  >(styles: T): O {
-  const out = Object.keys(styles).reduce((prev: O, classKey: string) => ({
-    ...prev,
-    [classKey]: style({
-      ...styles[classKey],
-      $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined,
-    }),
-  }) as O, {} as O);
-  return out;
+  return replaceNests<T, K, O>(styles);
 }
+
+const s = createStyles({
+  anchor: {
+    display: 'flex',
+  },
+  zebra: {
+    borderTop: '5px solid transparent',
+    height: 0,
+    width: 0,
+  },
+  separator: {
+    $nest: {
+      '& > $anchor': {
+        $nest: {
+          ' & > $zebra': {
+            backgroundColor: 'pink',
+          },
+        },
+        position: 'absolute',
+      },
+    },
+    backgroundColor: 'red',
+    border: '4px solid blue',
+  },
+});
+
+console.info(s);
+console.info(getStyles());

@@ -4,6 +4,7 @@
   "description": "A useful collection of typestyle extensions and helper functions to make working with TypeStyle even more pleasant",
   "main": "dist/index.js",
   "scripts": {
+    "exec:createStyles": "ts-node ./src/createStyles.ts",
     "exec:replaceNests": "ts-node ./src/replaceNests.ts"
   },
   "repository": {

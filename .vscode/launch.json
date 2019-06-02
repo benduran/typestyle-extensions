@@ -7,14 +7,16 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "runtimeArgs": [
-          "-r",
-          "ts-node/register"
-      ],
-      "args": [
-          "${workspaceFolder}/src/replaceNests.ts"
-      ]
-  }
+      "name": "Replace Nests",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "args": ["${workspaceFolder}/src/replaceNests.ts"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Create Styles",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "args": ["${workspaceFolder}/src/createStyles.ts"]
+    }
   ]
 }
