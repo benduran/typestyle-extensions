@@ -17,6 +17,21 @@
       "name": "Create Styles",
       "runtimeArgs": ["-r", "ts-node/register"],
       "args": ["${workspaceFolder}/src/createStyles.ts"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Tests",
+      "preLaunchTask": "build",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+      "args": [
+        "--config",
+        "${workspaceRoot}/jest.config.js"
+      ],
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceRoot}/build/**/*"
+      ]
     }
   ]
 }

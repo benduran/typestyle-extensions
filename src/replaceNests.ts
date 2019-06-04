@@ -1,13 +1,13 @@
 
-import { cssRule, getStyles, style } from 'typestyle';
-import { NestedCSSProperties } from 'typestyle/lib/types';
+import { cssRule, style } from 'typestyle';
+import { IStylesheet } from './utilTypes';
 
 /**
  * This is kind of gross, but it works.
  * Eventually, migrate to not mutating the first parameter, as that's pretty crappy (though it's easier to understand)
  */
 function recurseReplaceNestsInNests (
-  nested: NestedCSSProperties['$nest'] = {},
+  nested: IStylesheet['$nest'] = {},
   outBuilder: { [nestedSelector: string]: string },
 ) {
   const outputKeys = Object.keys(outBuilder);
@@ -25,7 +25,7 @@ function recurseReplaceNestsInNests (
 }
 
 export default function replaceNests<
-  T extends { [classKey: string]: NestedCSSProperties },
+  T extends { [classKey: string]: IStylesheet },
   K extends keyof T,
   O extends { [classKey in K]: string },
 > (styles: T): O {
@@ -38,8 +38,10 @@ export default function replaceNests<
     const styleKeys = Object.keys(it);
     if (styleKeys.some(sk => sk === '$nest')) {
       // Okay, we've got a nested $nest key, so we need to pluck that from this object
-      const { $nest, ...cssRules } = it;
-      const generatedClassName = style({ ...cssRules, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined });
+      const { $nest, $mediaQueries = [], ...cssRules } = it;
+      const generatedClassName = style({
+        ...cssRules, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined,
+      }, ...$mediaQueries);
       // need to loop over all $nest keys
       out[classKey] = generatedClassName;
       recurseReplaceNestsInNests($nest, out);
@@ -47,27 +49,4 @@ export default function replaceNests<
     } else out[classKey] = style({ ...it, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined });
   });
   return out as O;
-}
-
-if (!module.parent) {
-  const ruleTest: { [classKey: string]: NestedCSSProperties } = {
-    button: {
-      $nest: {
-        '& > span': {
-          $nest: {
-            '& div, & $button': {
-              color: 'purplenurple',
-            },
-          },
-        },
-
-      },
-      backgroundColor: 'white',
-      color: 'red',
-    },
-  };
-  const thing = replaceNests(ruleTest);
-  console.info(thing);
-  const styles = getStyles();
-  console.info(styles);
 }
