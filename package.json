@@ -13,7 +13,7 @@
     "clean:regulartest": "rimraf ./dist/test",
     "clean:esmtest": "rimraf ./dist/esm/test",
     "clean:tests": "rimraf ./dist/test",
-    "prepublishOnly": "build",
+    "prepublishOnly": "npm run build",
     "test": "jest"
   },
   "repository": {
