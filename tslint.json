@@ -8,9 +8,11 @@
   "rules": {
     "align": [false],
     "forin": [false],
+    "import-name": [false],
     "max-line-length": [true, 150],
+    "no-increment-decrement": [false],
     "object-literal-sort-keys": [false],
-    "space-before-function-paren": [false]
+    "space-before-function-paren": [false],
   },
   "rulesDirectory": []
 }
