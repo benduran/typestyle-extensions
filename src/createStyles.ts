@@ -30,7 +30,7 @@ export default function createStyles<
     [classKey, classKeyStyles]: [string, IStylesheet],
   ) => {
     const { $mediaQueries = [], $nest, ...rest } = classKeyStyles;
-    const generatedClassName = style({ ...rest, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined });
+    const generatedClassName = style({ ...rest, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined }, ...$mediaQueries);
     seen[classKey] = generatedClassName;
     if ($nest) generateNestedStyles($nest, `.${generatedClassName}`, seen);
     return Object.assign(prev, {

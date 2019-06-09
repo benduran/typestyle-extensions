@@ -3,7 +3,10 @@ import { media } from 'typestyle';
 import { NestedCSSProperties } from 'typestyle/lib/types';
 
 export interface IBreakpoints {
-  [size: string]: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
 }
 
 let breakpoints: IBreakpoints = {

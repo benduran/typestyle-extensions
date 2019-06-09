@@ -13,6 +13,7 @@
     "no-increment-decrement": [false],
     "object-literal-sort-keys": [false],
     "space-before-function-paren": [false],
+    "quotemark": [true, "single"]
   },
   "rulesDirectory": []
 }
