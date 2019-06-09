@@ -1,0 +1,8 @@
+
+node_modules/
+test/
+jest.config.js
+tsconfig.json
+tslint.json
+.editorconfig
+src/
