@@ -1,6 +1,6 @@
 {
   "name": "typestyle-extensions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A useful collection of typestyle extensions and helper functions to make working with TypeStyle even more pleasant",
   "main": "dist/src/index.js",
   "module": "dist/esm/src/index.js",
