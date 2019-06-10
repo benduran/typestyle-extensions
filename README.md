@@ -1,4 +1,4 @@
-# typestyle-extensions
+# typestyle-extensions [![Build Status](https://travis-ci.org/benduran/typestyle-extensions.svg?branch=master)](https://travis-ci.org/benduran/typestyle-extensions)
 Useful extension and helper functions to make your TypeStyle experience better
 
 ## What does this provide that out-of-the-box TypeStyle does not?
