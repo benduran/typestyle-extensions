@@ -23,14 +23,14 @@ export default function createStyles<
   T extends { [classKey: string]: IStylesheet },
   K extends keyof T,
   O extends { [classKey in K]: string },
-> (styles: T): O {
+> (styles: T, useFriendlyNames: boolean = process.env.NODE_ENV !== 'production'): O {
   const seen: any = {};
   return Object.entries(styles).reduce((
     prev: O,
     [classKey, classKeyStyles]: [string, IStylesheet],
   ) => {
     const { $mediaQueries = [], $nest, ...rest } = classKeyStyles;
-    const generatedClassName = style({ ...rest, $debugName: process.env.NODE_ENV !== 'production' ? classKey : undefined }, ...$mediaQueries);
+    const generatedClassName = style({ ...rest, $debugName: useFriendlyNames ? classKey : undefined }, ...$mediaQueries);
     seen[classKey] = generatedClassName;
     if ($nest) generateNestedStyles($nest, `.${generatedClassName}`, seen);
     return Object.assign(prev, {
