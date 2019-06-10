@@ -14,6 +14,7 @@ Useful extension and helper functions to make your TypeStyle experience better
 - `npm install typestyle-extensions --save`
 
 ## Usage
+### Basic Usage
 ```
 import { createStyles } from 'typestyle-extensions';
 
@@ -41,6 +42,7 @@ const styles = createStyles({
   },
 });
 
+// Your React component
 const MyComponent = () => (
   <button className={styles.myButton}>
     <svg className={styles.icon}>{ /*...*/ }</svg>
@@ -50,3 +52,48 @@ const MyComponent = () => (
 export default MyComponent;
 
 ```
+### Media Queries
+```
+import { createStyles, mediaQueries } from 'typestyle-extensions';
+
+const styles = createStyles({
+  appWrapper: {
+    $mediaQueries: [
+      mediaQueries.widthDown('md', {
+        right: 0,
+        '-webkit-overflow-scrolling': 'touch',
+      }),
+      mediaQueries.widthUp('lg', {
+        backgroundColor: 'red', // make my app super ugly on large desktop screens!
+      }),
+    ],
+    bottom: 0,
+    left: 0,
+    position: 'fixed,
+    right: '20rem',
+    top: 0,
+  },
+});
+```
+
+Out of the box, `typestyle-extensions` makes some generalized assumptions about browser widths and sets the following breakpoint sizes (by default):
+```
+  sm: 600;
+  md: 960;
+  lg: 1280;
+  xl: 1920;
+```
+
+If you would like to set your own sizes, you can do so via the `setBreakpointSizes(sizes)` function.
+This must be done *before* you use the `widthDown` or `widthUp` helper functions
+
+## License
+**MIT**
+
+Copyright 2019 [@benduran](stratodyne@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
