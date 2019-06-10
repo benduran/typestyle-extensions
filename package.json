@@ -5,6 +5,8 @@
   "main": "dist/src/index.js",
   "module": "dist/esm/src/index.js",
   "js:next": "dist/esm/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "build:plain": "tsc",
     "build:esm": "tsc --outDir ./dist/esm --target es6",
