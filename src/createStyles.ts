@@ -2,6 +2,7 @@
 import { cssRule, style } from 'typestyle';
 import { NestedCSSSelectors } from 'typestyle/lib/types';
 
+import generateRandomClassNameBase from './generateRandomClassNameBase';
 import { IStylesheet } from './utilTypes';
 
 function generateNestedStyles($nest: NestedCSSSelectors, parentSelector: string, classKeyClassNameMap: { [classKey: string]: string }) {
@@ -30,7 +31,9 @@ export default function createStyles<
     [classKey, classKeyStyles]: [string, IStylesheet],
   ) => {
     const { $mediaQueries = [], $nest, ...rest } = classKeyStyles;
-    const generatedClassName = style({ ...rest, $debugName: useFriendlyNames ? classKey : undefined }, ...$mediaQueries);
+    // While this is less optimal that letting TypeStyle figure out which styles it can duplicate
+    // it results in many fewer styling issues that are non obvious because of rule sharing among parent selectors
+    const generatedClassName = style({ ...rest, $debugName: useFriendlyNames ? classKey : generateRandomClassNameBase() }, ...$mediaQueries);
     seen[classKey] = generatedClassName;
     if ($nest) generateNestedStyles($nest, `.${generatedClassName}`, seen);
     return Object.assign(prev, {
