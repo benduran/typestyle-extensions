@@ -29,9 +29,10 @@ const alpha = [
 ];
 
 const alphaLen = alpha.length;
+let alphaSeed = (new Date()).getTime();
 
 export default function generateRandomClassNameBase() {
-  const now = (new Date()).getTime().toString();
+  const now = (alphaSeed++).toString();
   // split into pairs
   let out = '';
   const len = now.length;
