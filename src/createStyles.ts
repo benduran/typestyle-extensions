@@ -16,7 +16,7 @@ function generateNestedStyles(
       let replacedSelector = currSelector.replace(/&/gm, parentSelector);
       classKeys.forEach((classKey) => {
         const selector = `.${classKeyClassNameMap[classKey]}`;
-        replacedSelector = replacedSelector.replace(`\$${classKey}`, selector);
+        replacedSelector = replacedSelector.replace(new RegExp(`\\$${classKey}`, 'gm'), selector);
       });
       const { $nest: $innerNest, ...rest } = styles;
       cssRule(replacedSelector, rest);
