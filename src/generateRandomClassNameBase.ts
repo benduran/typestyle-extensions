@@ -31,8 +31,8 @@ const alpha = [
 const alphaLen = alpha.length;
 let alphaSeed = (new Date()).getTime();
 
-export default function generateRandomClassNameBase() {
-  const now = (alphaSeed++).toString();
+export default function generateRandomClassNameBase(seedPrefix: string = '') {
+  const now = `${seedPrefix}${(alphaSeed++).toString()}`;
   // split into pairs
   let out = '';
   const len = now.length;

@@ -51,5 +51,8 @@
   },
   "peerDependencies": {
     "typestyle": "^2.0.2"
+  },
+  "dependencies": {
+    "uuid-random": "^1.0.9"
   }
 }
