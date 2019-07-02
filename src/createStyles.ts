@@ -1,4 +1,4 @@
-import { cssRule, style } from 'typestyle';
+import { createTypeStyle, cssRule, style } from 'typestyle';
 import { NestedCSSSelectors } from 'typestyle/lib/types';
 
 import generateRandomClassNameBase from './generateRandomClassNameBase';
@@ -41,15 +41,18 @@ export default function createStyles<
 >(
   styles: T,
   classNamePrefix: string = '',
+  createNewSheet: boolean = false,
   useFriendlyNames: boolean = process.env.NODE_ENV !== 'production',
 ): O {
+  const instance = createNewSheet ? createTypeStyle() : null;
+  const s = createNewSheet && instance ? instance.style : style;
   const seen: any = {};
   return Object.entries(styles).reduce(
     (prev: O, [classKey, classKeyStyles]: [string, IStylesheet]) => {
       const { $mediaQueries = [], $nest, ...rest } = classKeyStyles;
       // While this is less optimal that letting TypeStyle figure out which styles it can duplicate
       // it results in many fewer styling issues that are non obvious because of rule sharing among parent selectors
-      const generatedClassName = style(
+      const generatedClassName = s(
         {
           ...rest,
           $debugName: useFriendlyNames
@@ -68,6 +71,11 @@ export default function createStyles<
           seen,
           Object.keys(seen).sort((a, b) => b.length - a.length),
         );
+      }
+      if (typeof document !== 'undefined' && typeof document.createElement === 'function' && createNewSheet && instance) {
+        const tag = document.createElement('style');
+        document.head.appendChild(tag);
+        tag.innerHTML = instance.getStyles();
       }
       return Object.assign(prev, {
         [classKey]: generatedClassName,
