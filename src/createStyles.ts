@@ -44,10 +44,12 @@ export default function createStyles<
   createNewSheet: boolean = false,
   useFriendlyNames: boolean = process.env.NODE_ENV !== 'production',
 ): O {
-  const instance = createNewSheet ? createTypeStyle() : null;
+  const tag = createNewSheet ? document.createElement('style') : null;
+  if (tag) document.head.appendChild(tag);
+  const instance = createNewSheet && tag ? createTypeStyle(tag) : null;
   const s = createNewSheet && instance ? instance.style : style;
   const seen: any = {};
-  return Object.entries(styles).reduce(
+  const out = Object.entries(styles).reduce(
     (prev: O, [classKey, classKeyStyles]: [string, IStylesheet]) => {
       const { $mediaQueries = [], $nest, ...rest } = classKeyStyles;
       // While this is less optimal that letting TypeStyle figure out which styles it can duplicate
@@ -72,15 +74,11 @@ export default function createStyles<
           Object.keys(seen).sort((a, b) => b.length - a.length),
         );
       }
-      if (typeof document !== 'undefined' && typeof document.createElement === 'function' && createNewSheet && instance) {
-        const tag = document.createElement('style');
-        document.head.appendChild(tag);
-        tag.innerHTML = instance.getStyles();
-      }
       return Object.assign(prev, {
         [classKey]: generatedClassName,
       });
     },
     {} as O,
   );
+  return out;
 }
